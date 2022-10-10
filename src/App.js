@@ -2,16 +2,15 @@
 import './css/style.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import image1 from './img/member1.jpg';
-import image2 from './img/member2.jpg';
+
 function App() {
-  let divStyle = { width: 100, height: 100, backgroundImage: `url(${image2})`, backgroundSize: "cover" }
+  let divStyle = { width: 100, height: 100, backgroundImage: `url(${process.env.PUBLIC_URL + 'img/member2.jpg'})`, backgroundSize: "cover" }
 
   return (
     <figure>
       <Header />
-      <img src={image1} />
-      <img src={image2} />
+      <img src={process.env.PUBLIC_URL + 'img/member1.jpg'} />
+      <img src={process.env.PUBLIC_URL + 'img/member2.jpg'} />
       <div style={divStyle}>
 
       </div>
@@ -213,4 +212,30 @@ let divStyle = { width: 100, height: 100, backgroundImage: `url(${image2})`, bac
 
 이방법이 기존의 이미지를 가져오는 방법 너무 번거롭다 일일이 임포트 시켜야한다
 이렇게 하는 방법이 있고 
+
+2번째 방법은 
+
+폴더를 src 에서 public으로 변경시킨다
+경로를 바꿔야하는데 지정해주지 않고 리액트가 자동으로 추적하게하는 구문을 적을것이다
+
+
+import './css/style.css';
+import Header from './components/Header';
+import Footer from './components/Footer';
+기존것을 지우고
+function App() {
+  let divStyle = { width: 100, height: 100, backgroundImage: `url(${process.env.PUBLIC_URL + 'img/member2.jpg'})`, backgroundSize: "cover" }
+
+  return (
+    <figure>
+      <Header />
+      <img src={process.env.PUBLIC_URL + 'img/member1.jpg'} /> 자동경로추적과 뒤에 img폴더부터 문자열로 넣어준다
+      <img src={process.env.PUBLIC_URL + 'img/member2.jpg'} />
+      <div style={divStyle}>
+
+      </div>
+      <Footer />
+    </figure>
+  );
+}
 */
