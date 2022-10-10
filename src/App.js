@@ -1,16 +1,21 @@
 
 import './css/style.css';
-import { Logo, Menu } from './components/Layout';
+import Header from './components/Header';
 import Footer from './components/Footer';
-
+import image1 from './img/member1.jpg';
+import image2 from './img/member2.jpg';
 function App() {
+  let divStyle = { width: 100, height: 100, backgroundImage: `url(${image2})`, backgroundSize: "cover" }
+
   return (
     <figure>
-      <Logo />
-      <Menu />
+      <Header />
+      <img src={image1} />
+      <img src={image2} />
+      <div style={divStyle}>
 
-
-      <Footer></Footer>
+      </div>
+      <Footer />
     </figure>
   );
 }
@@ -103,5 +108,109 @@ import { Logo, Menu } from './components/Layout'; 이방법으로
 
 하나의 헤더로 내보내보자
 
+
+
 */
 
+/*
+  function Logo() {
+    return (
+        <h1>
+            <strong>DCODELAB</strong><br />
+            <span>UI/UX DESIGN & DEVELPMENT</span>
+        </h1>
+    )
+}
+
+function Menu() {
+    return (
+        <a href="#" className="menu">
+            <i className='fas fa-bars'></i>
+        </a>
+    )
+}
+여기서 a를 넣고 디폴트내용을 변경
+
+function Logo() {
+    return (
+        <h1>
+            <strong>DCODELAB</strong><br />
+            <span>UI/UX DESIGN & DEVELPMENT</span>
+        </h1>
+
+        <a href="#" className="menu">
+            <i className='fas fa-bars'></i>
+        </a>
+    )
+}
+
+
+export default Header; 
+
+이러면 빨간줄이 그어짐 이유는 하나의 태그로 묶여야한다
+retrun은 무조건 하나의 덩어리만을 반환하기 때문에 div로 묶어야한다 위아래 <div></div> 넣기
+저장하고 layout.js를 Header.js로 변경 함수이름도 변경 
+자동으로 app.js의 import부분이 변경되거나 혹은 변경하겠냐는 창이 뜸 yes
+import { Logo, Menu } from './components/Header';
+이걸  
+import Header from './components/Header'; 변경후 밑에
+<Header />
+로 변경후 저장
+
+오류가 뜨거나 아님 안떠도 문제가있는것 즉 div는 쓸데없는 태그를 만든것이므로 <></>으로 변경되어야한다
+
+이것을 fragment라고 한다
+*/
+
+/*
+이미지 추가하기
+
+2가지의 방법이있음
+
+src안쪽에 img폴더를 만들고 이미지를 넣음
+
+첫번째방법
+
+img 폴더를 src안에 넣는다
+import image1 from './img/member1.jpg';
+
+<img src={image1} />
+넣어주면 잘나온다
+
+배경으로 넣고싶으면?
+div를 img 다음에 만들고 scss로 와서 
+div를 코딩 
+
+
+
+
+html에서 인라인으로 style을 넣은것처럼 같이 해보겠다
+<div style={{ width: 300, height: 300, border: "1px solid aqua" }}>
+
+      </div>
+중괄호를 감싼뒤에 객체형태로 css값을 부여해야된다 
+
+객체니까 변수화 할수 있지 않을까??
+function App() {
+  let divStyle = { width: 100, height: 100, border: "1px solid aqua" } <--
+
+  return (
+    <figure>
+      <Header />
+      <img src={image1} />
+      <img src={image2} />
+      <div style={divStyle}> <---
+
+      </div>
+      <Footer />
+    </figure>
+  );
+}
+
+이제 보더값대신 백그라운드이미지를 넣어보자
+
+let divStyle = { width: 100, height: 100, backgroundImage: `url(${image2})`, backgroundSize: "cover" }
+
+이방법이 기존의 이미지를 가져오는 방법 너무 번거롭다 일일이 임포트 시켜야한다
+이렇게 하는 방법이 있고 
+*/
