@@ -5,6 +5,8 @@ figure {
 	width: 100%;
 	height: 100vh;
 	background: linear-gradient(45deg, pink, violet);
+	position: relative;
+	overflow: hidden;
 
 	h1 {
 		position: absolute;
@@ -40,7 +42,7 @@ figure {
 		height: 65vh;
 		position: absolute;
 		left: 50%;
-		top: 50%;
+		top: 150%;
 		margin-top: -32vh;
 		margin-left: -10vw;
 		article {
