@@ -5,6 +5,7 @@ import Panels from './components/Panels';
 import Btns from './components/Btns';
 import Footer from './components/Footer';
 import { useState } from 'react';
+import { useRef } from 'react';
 
 function App() {
   const arr = ['Blizzards', 'Calm', "Dusty_Road", "Escape", "Payday", "Retreat", "Seasonal", "Vespers"];
@@ -26,7 +27,7 @@ function App() {
 
 
       </section>
-      <Btns />
+      <Btns deg={deg} />
       <Footer />
     </figure>
   );
@@ -186,7 +187,7 @@ useState에는 이제 무조건 배열로 반환된 값이 들어있게 된다
 이제 좌우버튼을 넣어서 상태값을 변경해보자
 */
 /*
-좌우버튼 코딩할꺼임
+좌우버튼 ui 코딩할꺼임
 <button onClick={changeState}>버튼</button>
 function changeState() {
     let txt2 = [...txt];
@@ -215,4 +216,89 @@ function changeState() {
 
   이제 버튼에 이벤트 부여하고 유즈스테이트를 이용해서 바꿔주면된다
 
+*/
+
+/*
+좌우버튼 클릭시 유즈스테이트로 순서값을 관리하면서 넥스트트 증가 프리브는 감소해서
+섹션의 로테이트값도 연동해서 회전시킬것
+그럴려면 
+섹션요소에 트렌지션1초부여
+
+btns.js로 와서 let [index,setIndex] = useState을 리턴문위에작성하면 임포트가 자동으로 됨
+초기값을 (0)으로 설정let [index,setIndex] = useState(0)
+이제 인덱스값은 셋인텍스 함수로만 변경이 가능함
+넥스트 클릭시 1증가를 해보자
+
+<div className="btnNext" onClick={() => {
+                setIndex(index++);
+                console.log(index);
+            }}>
+넥스트 버튼클릭시 뭐가 이상한 콘솔이 찍힘 중복되는것
+후위연산자라서 그런것 따럿 먼저 변경을 시키고 반영을 해야되는것
+따라서  setIndex(index++); 이게 아닌  setIndex(++index); 으로 해결됨
+프리브는 --로바꿈됨
+
+콘솔을 확인해보자
+이제 이 값을 45를 곱해서 부모태그 섹션을 찾아서 돌리면되겠죠?
+가상돔이라 클릭한 시점에서 찾아야되므로 기존과 좀 다름
+ <div className="btnNext" onClick={(e) => { <== e 꼭써주고
+const frame = e.target.closest("figure").querySelector('section'); 클릭한 그 시점에서 찾아야되므로 이렇게 버튼의 부모는 피규어태그이므로 그곳에서 섹션을 다시 찾는식으로
+deg값을 사용할껀데 이미 app.js에 있으므로 전달 프롭스만 해줌됨
+
+<Btns deg={deg} /> 로
+function Btns(props) {
+frame.style.transform = `rotate(${index * props.deg}deg)` 각각 반영
+
+혹시 방향이 이상하면 부호만 반대로하심됨~
+
+이제 지금 만든 이벤트를 리턴 밖에서 함수로 제작하자
+ let [index, setIndex] = useState(0);
+    function plus(e) {
+        setIndex(++index);
+        const frame = e.target.closest("figure").querySelector('section');
+        frame.style.transform = `rotate(${index * props.deg}deg)`
+    }리턴위에 만들어주고
+
+     <div className="btnNext" onClick={(e) => plus(e) }> 여긴 이렇게 정리
+
+     minus 함수 생성과 프리브 버튼쪽 정리
+     function minus(e) {
+        setIndex(--index);
+        const frame = e.target.closest("figure").querySelector('section');
+        frame.style.transform = `rotate(${index * props.deg}deg)`
+    }
+     <div className="btnPrev" onClick={e => minus(e)}> 여기도정리
+
+     나머지는 코딩안할꺼임 재생버튼등은
+
+
+
+*/
+
+
+/*
+가상돔 참조하는 useRef
+가상돔과 리얼돔의 차이를 알아갈 목적으로 배우는것
+
+jsx라는 가상돔 즉 버츄얼돔
+지금 우리가 보는 DOM은 실제존재하는것이 아님
+html등으로 만든것은 브라우저가 출력하는 리얼돔임 변경사항은 js 강제변경해야됨
+하지만 가상돔으로 하는 리액트는 jsx로 메모리상에서 가상돔을 만들고 변경사항을 비교함
+변경된 부분만 빠르게 변경해줘서 리얼돔으로 변환해줌
+
+따라서 효율이 좋음
+
+우리의 코드에서 비효율적인 부분은 바로 btns의 
+ const frame = e.target.closest("figure").querySelector('section');에서
+ closest나 쿼리셀럭터는 리얼돔에서만 할수있기 때문에 리액트에서 사용하기에는 적합하지 않음
+
+ 따라서 고쳐야됨
+ 이것을 가상돔으로 고쳐야되는데
+ 이것을 useRef라는 훅임 레퍼런스약자
+
+ 갈고리로 걸어서 추가기능을 한다고 해서 훅이라고 불리음
+
+import Footer from './components/Footer';
+import { useState } from 'react';
+import {useRef} from 'react'; <- 추가
 */
