@@ -12,13 +12,14 @@ function App() {
   const deg = 360 / arr.length;
 
   let [txt, setTxt] = useState(arr);
+  const frame = useRef(null);
+
   return (
     <figure>
 
       <Header />
 
-
-      <section>
+      <section ref={frame}>
         {
           txt.map((data, index) => {
             return <Panels key={index} num={index} txt={data} deg={deg} />
@@ -27,7 +28,7 @@ function App() {
 
 
       </section>
-      <Btns deg={deg} />
+      <Btns deg={deg} frame={frame} />
       <Footer />
     </figure>
   );
@@ -301,4 +302,64 @@ html등으로 만든것은 브라우저가 출력하는 리얼돔임 변경사�
 import Footer from './components/Footer';
 import { useState } from 'react';
 import {useRef} from 'react'; <- 추가
+
+let [txt, setTxt] = useState(arr);
+  const frame = useRef(null);<-- 추가하고 밑에 콘솔
+  명시적으로 비워둠
+  console.log(frame); 
+섹션을참조하고 싶으면 
+  <section ref={frame}> <-- 추가 등록하면 섹션을 참조하게됨
+
+  잘참조하는지 확인해보자
+ <button onClick={() => { console.log(frame.current) }}>버튼</button>
+ 버튼을 추가하고 클릭을하면 콘솔에 섹션전체를 잘 참조 즉 가져오고있다
+
+ 이값을 버튼이 제어해야되므로 btns에 프롭값으로 전달해줌
+<Btns deg={deg} frame={frame} />
+
+btns.js로 와서 이젠 이벤트값 즉 e 을 전달해줄 필요가없음
+
+따라서  <div className="btnPrev" onClick={e => minus(e)}> 여기서
+<div className="btnPrev" onClick={minus}> 함수명만 전달
+
+또 각함수에 e를 지우고
+function plus() {
+        setIndex(++index);
+        const frame = e.target.closest("figure").querySelector('section'); <-- 지우고
+        frame.style.transform = `rotate(${index * props.deg}deg)` <-- frame이 아닌
+    }
+
+깔끔하게 밑에 내용으로 정리
+    function plus() {
+        setIndex(++index);
+        props.frame.current.style.transform = `rotate(${index * props.deg}deg)`;
+    }
+    function minus() {
+        setIndex(--index);
+        props.frame.current.style.transform = `rotate(${index * props.deg}deg)`;
+    }
+
+    잘되는지 콘솔로
+     function plus() {
+        setIndex(++index);
+        console.log(props.frame.current);
+        props.frame.current.style.transform = `rotate(${index * props.deg}deg)`;
+    }
+    넥스트 버튼을 누를때마다 참조되는 섹션값이 나올것임
+
+
+    코드 개선
+    플러스 마이너스가 동일해보임
+
+    function move(num) {
+        setIndex(num);
+        props.frame.current.style.transform = `rotate(${num * props.deg}deg)`;
+    }
+    합치고
+<div className="btnNext" onClick={plus}> 기존의 것을
+     <div className="btnNext" onClick={() => move(++index)}> 바꿔줌 
+     무브함수를 만들고 증감되는것만 파라미터로 넣어줌
+
+     마지막으로 app.js
+     <button onClick={() => { console.log(frame.current) }}>버튼</button> 삭제
 */
