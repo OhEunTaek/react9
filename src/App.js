@@ -1,8 +1,9 @@
 
 import './css/style.css';
 import Header from './components/Header';
-import Footer from './components/Footer';
 import Panels from './components/Panels';
+import Btns from './components/Btns';
+import Footer from './components/Footer';
 import { useState } from 'react';
 
 function App() {
@@ -10,16 +11,8 @@ function App() {
   const deg = 360 / arr.length;
 
   let [txt, setTxt] = useState(arr);
-
-  function changeState() {
-    let txt2 = [...txt];
-    txt2[0] = "Retreat";
-    console.log(txt2);
-    setTxt(txt2);
-  }
   return (
     <figure>
-      <button onClick={changeState}>버튼</button>
 
       <Header />
 
@@ -33,6 +26,7 @@ function App() {
 
 
       </section>
+      <Btns />
       <Footer />
     </figure>
   );
@@ -190,4 +184,35 @@ useState에는 이제 무조건 배열로 반환된 값이 들어있게 된다
       이렇게 변경 이렇게되면 리턴안은 깔끔해지고 앱함수를 처음 볼때 어떤 변수와 함수가 실행되는지를 볼 수 있어 좋다
 
 이제 좌우버튼을 넣어서 상태값을 변경해보자
+*/
+/*
+좌우버튼 코딩할꺼임
+<button onClick={changeState}>버튼</button>
+function changeState() {
+    let txt2 = [...txt];
+    txt2[0] = "Retreat";
+    console.log(txt2);
+    setTxt(txt2);
+  }
+  지워줌 좌우버튼클릭시 유즈스테이트 다시 쓸예정임
+
+  섹션 바깥에 호출하고 컴포넌트로 버튼을 만들어보자
+
+  btns컴포넌트만들고 각가 연결해줌
+  import Btns from './components/Btns';
+   </section>
+      <Btns />
+      <Footer />
+
+  Btns.js 에서 먼저 두개의 div를 만들고 프레그멘트 복습시키면서 프레그먼트로 감싸줌
+  돔이 만들어져있는지 확인할것인데 setTxt사용안했다는 경고 혹시 나오는데 걍 무시
+
+  사스로 가서 버튼 코딩 ->
+
+  가로로 프르브는 왼쪽으로 치우치게 하기위해transform: translate(-20vw,-50%); 함 
+
+  버튼 css 프리브 같이하고 넥스트 시켜보기 
+
+  이제 버튼에 이벤트 부여하고 유즈스테이트를 이용해서 바꿔주면된다
+
 */

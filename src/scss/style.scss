@@ -127,6 +127,121 @@ figure {
 		}
 	}
 
+	.btnPrev {
+		width: 60px;
+		height: 60px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-20vw, -50%);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+		//border: 1px solid aqua;
+
+		span {
+			font: 11px/1 'arial';
+			color: #fff;
+
+			transform: translateX(30%);
+			//살짝 치우쳐지게 만들것
+			transition: 0.5s;
+		}
+
+		&::before,
+		&::after {
+			content: '';
+			display: block;
+			width: 100%;
+			height: 1px;
+			background: #fff;
+			position: absolute;
+			top: 50%;
+			left: 0px;
+			transform-origin: left center;
+			transition: 0.5s;
+			//정중간에 수평으로 되어있다가 마우스를 올리면 접히면서 화살표모양이 나오도록할 예정
+			//왼쪽기준으로 회전시키려고transform-origin: left center;
+			//반대방향으로 회전하도록 transform: rotate(-180deg);
+		}
+		&::before {
+			transform: rotate(-180deg);
+		}
+		&::after {
+			transform: rotate(180deg);
+		} //여기만 양수값}
+		&:hover {
+			span {
+				opacity: 0;
+				transform: translateX(100%);
+			}
+			&::before {
+				transform: rotate(-30deg);
+			}
+			&::after {
+				transform: rotate(30deg);
+			}
+		}
+	}
+	.btnNext {
+		width: 60px;
+		height: 60px;
+		position: absolute;
+		top: 50%;
+		right: 50%;
+		transform: translate(20vw, -50%);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+		//border: 1px solid aqua;
+
+		span {
+			font: 11px/1 'arial';
+			color: #fff;
+
+			transform: translateX(-30%);
+			//살짝 치우쳐지게 만들것
+			transition: 0.5s;
+		}
+
+		&::before,
+		&::after {
+			content: '';
+			display: block;
+			width: 100%;
+			height: 1px;
+			background: #fff;
+			position: absolute;
+			top: 50%;
+			left: 0px;
+			transform-origin: right center;
+			transition: 0.5s;
+			//정중간에 수평으로 되어있다가 마우스를 올리면 접히면서 화살표모양이 나오도록할 예정
+			//왼쪽기준으로 회전시키려고transform-origin: left center;
+			//반대방향으로 회전하도록 transform: rotate(-180deg);
+		}
+		&::before {
+			transform: rotate(180deg);
+		}
+		&::after {
+			transform: rotate(-180deg);
+		} //여기만 양수값}
+		&:hover {
+			span {
+				opacity: 0;
+				transform: translateX(-100%);
+			}
+			&::before {
+				transform: rotate(30deg);
+			}
+			&::after {
+				transform: rotate(-30deg);
+			}
+		}
+	}
+
 	> p {
 		position: absolute;
 		bottom: 7vh;
